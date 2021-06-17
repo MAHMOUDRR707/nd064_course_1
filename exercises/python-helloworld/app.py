@@ -1,5 +1,6 @@
 from flask import Flask
 import json
+import logging
 app = Flask(__name__)
 
 ##status
@@ -10,6 +11,8 @@ def status():
         status = 200,
         mimetype="application/json"
     )
+
+    app.logger.info("health is ok ")
     return status
 
 ##metrics
@@ -20,18 +23,22 @@ def metrics():
         status = 200,
         mimetype="application/json"
     )
+
+    app.logger.info("metrics is ok too")
+
     return metrics
 
 ##home
 @app.route("/")
 def hello():
+
+    app.logger.info("Home page is ok ")
+
     return "Hello World!"
 
 if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
+    logging.basicConfig(filename='app.log',level=logging.DEBUG)
     app.run(threaded=True)
-
-
 
 
 
